@@ -1,8 +1,11 @@
+using ComputerSeekho.API;
 using ComputerSeekho.API.Data;
 using ComputerSeekho.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<CloudinaryService>();
 
 
 builder.Services.AddApplicationServices(builder.Configuration);

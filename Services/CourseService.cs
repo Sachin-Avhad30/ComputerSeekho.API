@@ -1,4 +1,5 @@
-﻿using ComputerSeekho.API.Entities;
+﻿using CloudinaryDotNet;
+using ComputerSeekho.API.Entities;
 using ComputerSeekho.API.Enum;
 using ComputerSeekho.API.Repositories.Interfaces;
 using ComputerSeekho.Application.DTOs;
@@ -9,13 +10,15 @@ namespace ComputerSeekho.API.Services
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IFileStorageService _fileStorageService;
+        private readonly CloudinaryService _cloudinaryService; 
 
         public CourseService(
             ICourseRepository courseRepository,
-            IFileStorageService fileStorageService)
+            IFileStorageService fileStorageService, CloudinaryService cloudinary)
         {
             _courseRepository = courseRepository;
             _fileStorageService = fileStorageService;
+            _cloudinaryService = cloudinary;
         }
 
         public async Task<CourseResponseDTO> CreateCourseWithImageAsync(CourseCreateRequestDTO dto)
@@ -36,9 +39,15 @@ namespace ComputerSeekho.API.Services
 
             if (dto.CoverPhoto != null && dto.CoverPhoto.Length > 0)
             {
-                var coverPhotoUrl = await _fileStorageService.StoreImageAsync(
-                    dto.CoverPhoto,UploadType.Course ,dto.CourseName);
-                course.CoverPhoto = coverPhotoUrl;
+                //var coverPhotoUrl = await _fileStorageService.StoreImageAsync(
+                //    dto.CoverPhoto,UploadType.Course ,dto.CourseName);
+                //course.CoverPhoto = coverPhotoUrl;
+
+                var imageUrl = await _cloudinaryService.UploadImageAsync(
+    dto.CoverPhoto,
+    UploadType.Course,
+    dto.CourseName
+); course.CoverPhoto = imageUrl;
             }
 
             var savedCourse = await _courseRepository.AddAsync(course);
