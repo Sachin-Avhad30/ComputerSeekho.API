@@ -24,11 +24,13 @@ namespace ComputerSeekho.API.Extensions
             //  Repositories
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IBatchRepository,BatchRepository>();
-
+            services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             // Services
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IFileStorageService, FileStorageService>();
             services.AddScoped<IBatchService, BatchService>();
+            services.AddScoped<IAnnouncementService, AnnouncementService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             return services;
         }

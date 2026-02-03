@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ComputerSeekho.API.Entities
 {
     [Table("batch_master")]
-    public class Batch
+    public class Batch : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,6 +14,7 @@ namespace ComputerSeekho.API.Entities
         [Required]
         [Column("batch_name")]
         [MaxLength(100)]
+
         public string BatchName { get; set; }
 
         [Column("batch_start_date")]
@@ -51,10 +52,10 @@ namespace ComputerSeekho.API.Entities
         [MaxLength(255)]
         public string? BatchLogoUrl { get; set; }
 
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
+        //[Column("created_at")]
+        //public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        //[Column("updated_at")]
+        //public DateTime UpdatedAt { get; set; }
     }
 }
