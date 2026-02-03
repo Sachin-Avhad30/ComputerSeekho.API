@@ -9,7 +9,11 @@ namespace ComputerSeekho.API.Data
             : base(options) { }
 
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Announcement> Announcement { get; set; }
         public DbSet<Batch> Batches { get; set; }
+        public DbSet<RecruiterMaster> RecruiterMasters { get; set; }
+        public DbSet<PlacementMaster> PlacementMasters { get; set; }
+        public DbSet<StudentMaster> StudentMasters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
