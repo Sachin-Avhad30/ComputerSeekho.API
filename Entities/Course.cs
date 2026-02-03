@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ComputerSeekho.API.Entities
 {
     [Table("course_master")]
-    public class Course
+    public class Course : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -51,10 +51,10 @@ namespace ComputerSeekho.API.Entities
         [Column("video_id")]
         public int? VideoId { get; set; }
 
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
+        //[Column("created_at")]
+        //public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        //[Column("updated_at")]
+        //public DateTime UpdatedAt { get; set; }
     }
 }
