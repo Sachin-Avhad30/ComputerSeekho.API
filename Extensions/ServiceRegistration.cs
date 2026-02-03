@@ -28,6 +28,7 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IPlacementRepository, PlacementRepository>();
             services.AddScoped<IRecruiterRepository, RecruiterRepository>();
 
+            services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             // Services
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IFileStorageService, FileStorageService>();
@@ -35,6 +36,8 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IRecruiterService, RecruiterService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IPlacementService, PlacementService>();
+            services.AddScoped<IAnnouncementService, AnnouncementService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             return services;
         }

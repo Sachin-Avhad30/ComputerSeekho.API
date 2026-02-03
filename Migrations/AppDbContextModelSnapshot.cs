@@ -28,7 +28,7 @@ namespace ComputerSeekho.API.Migrations
 
                     b.Property<string>("AnnouncementText")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("announcement_text");
 
                     b.Property<DateTime>("CreatedAt")
@@ -36,7 +36,9 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true)
                         .HasColumnName("is_active");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -52,6 +54,10 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnName("valid_to");
 
                     b.HasKey("AnnouncementId");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("ValidFrom", "ValidTo");
 
                     b.ToTable("announcement_master");
                 });
