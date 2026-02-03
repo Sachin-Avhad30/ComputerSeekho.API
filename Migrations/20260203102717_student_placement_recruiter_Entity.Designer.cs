@@ -3,6 +3,7 @@ using System;
 using ComputerSeekho.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComputerSeekho.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203102717_student_placement_recruiter_Entity")]
+    partial class student_placement_recruiter_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +31,7 @@ namespace ComputerSeekho.API.Migrations
 
                     b.Property<string>("AnnouncementText")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("announcement_text");
 
                     b.Property<DateTime>("CreatedAt")
@@ -36,9 +39,7 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(true)
                         .HasColumnName("is_active");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -54,10 +55,6 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnName("valid_to");
 
                     b.HasKey("AnnouncementId");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("ValidFrom", "ValidTo");
 
                     b.ToTable("announcement_master");
                 });
