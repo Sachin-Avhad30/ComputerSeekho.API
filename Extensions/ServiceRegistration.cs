@@ -11,6 +11,7 @@ namespace ComputerSeekho.API.Extensions
 {
     public static class ServiceRegistration
     {
+        
         public static IServiceCollection AddApplicationServices(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -29,6 +30,8 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IRecruiterRepository, RecruiterRepository>();
             services.AddScoped<IAlbumRepository, AlbumRepository>();
             services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
+
+
             // Services
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IFileStorageService, FileStorageService>();
@@ -56,6 +59,7 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IEnquiryRepository, EnquiryRepository>();
             services.AddScoped<IEnquiryService, EnquiryService>();
 
+            services.AddScoped<IPaymentService, PaymentService>();
             return services;
         }
     }

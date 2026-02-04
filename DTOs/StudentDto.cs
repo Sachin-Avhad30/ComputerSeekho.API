@@ -1,4 +1,6 @@
 ﻿using ComputerSeekho.API.Enum;
+using ComputerSeekho.API.Enum;
+using ComputerSeekho.API.Enums;
 
 namespace ComputerSeekho.API.DTOs
 {
