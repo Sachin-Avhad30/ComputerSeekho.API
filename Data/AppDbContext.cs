@@ -15,6 +15,8 @@ namespace ComputerSeekho.API.Data
         public DbSet<Placement> PlacementMasters { get; set; }
         public DbSet<Student> StudentMasters { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         // DbSets
         public DbSet<Staff> Staff { get; set; }
