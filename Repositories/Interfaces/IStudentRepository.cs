@@ -4,10 +4,10 @@ namespace ComputerSeekho.API.Repositories.Interfaces
 {
     public interface IStudentRepository
     {
-        Task<List<StudentMaster>> GetAllAsync();
-        Task<StudentMaster> GetByIdAsync(int id);
-        Task AddAsync(StudentMaster student);
-        Task UpdateAsync(StudentMaster student);
-        Task DeleteAsync(StudentMaster student);
+        Task<List<Student>> GetAllAsync();
+        Task<Student> GetByIdAsync(int id);
+        Task AddAsync(Student student);
+        Task UpdateAsync(Student student);
+        Task DeleteAsync(Student student);
     }
 }

@@ -15,31 +15,31 @@ namespace ComputerSeekho.API.Repositories
             _context = context;
         }
 
-        public async Task<List<RecruiterMaster>> GetAllAsync()
+        public async Task<List<Recruiter>> GetAllAsync()
          => await _context.RecruiterMasters.ToListAsync();
 
-        public async Task<RecruiterMaster> GetByIdAsync(int id)
+        public async Task<Recruiter> GetByIdAsync(int id)
             => await _context.RecruiterMasters.FindAsync(id);
 
-        public async Task AddAsync(RecruiterMaster recruiter)
+        public async Task AddAsync(Recruiter recruiter)
         {
             _context.RecruiterMasters.Add(recruiter);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(RecruiterMaster recruiter)
+        public async Task UpdateAsync(Recruiter recruiter)
         {
             _context.RecruiterMasters.Update(recruiter);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(RecruiterMaster recruiter)
+        public async Task DeleteAsync(Recruiter recruiter)
         {
             _context.RecruiterMasters.Remove(recruiter);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<RecruiterMaster>> GetActiveAsync()
+        public async Task<List<Recruiter>> GetActiveAsync()
         {
             return await _context.RecruiterMasters
                 .AsNoTracking()

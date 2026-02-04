@@ -54,5 +54,21 @@ namespace ComputerSeekho.API.Controllers
             var result = await _service.GetPlacedStudentPhotosAsync(recruiterId);
             return Ok(result);
         }
+
+        //GET: api/placements/batches - Get all batches with placement count and logo
+        [HttpGet("batches")]
+        public async Task<IActionResult> GetBatchesWithPlacements()
+        {
+            var batches = await _service.GetBatchesWithPlacementsAsync();
+            return Ok(batches);
+        }
+
+        // GET: api/placements/batch/{batchId} - Get all placed students for a batch
+        [HttpGet("batch/{batchId}")]
+        public async Task<IActionResult> GetPlacedStudentsByBatch(int batchId)
+        {
+            var students = await _service.GetPlacedStudentsByBatchAsync(batchId);
+            return Ok(students);
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace ComputerSeekho.Application.Services
         }
 
         // GET
-        public async Task<List<RecruiterMaster>> GetAllAsync()
+        public async Task<List<Recruiter>> GetAllAsync()
             => await _repository.GetAllAsync();
 
         // POST
@@ -37,7 +37,7 @@ namespace ComputerSeekho.Application.Services
                 );
             }
 
-            var recruiter = new RecruiterMaster
+            var recruiter = new Recruiter
             {
                 RecruiterName = dto.RecruiterName,
                 LogoUrl = logoUrl,

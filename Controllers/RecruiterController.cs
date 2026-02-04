@@ -22,7 +22,7 @@ namespace ComputerSeekho.API.Controllers
         
         
         // ✅ GET ACTIVE RECRUITER LOGOS ONLY
-        [HttpGet("logos/active")]
+        [HttpGet("active")]
         public async Task<IActionResult> GetActiveRecruiterLogos()
         {
             return Ok(await _service.GetActiveLogosAsync());

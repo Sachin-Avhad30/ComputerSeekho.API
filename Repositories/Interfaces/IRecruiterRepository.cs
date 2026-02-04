@@ -5,12 +5,12 @@ namespace ComputerSeekho.API.Repositories.Interfaces
 {
     public interface IRecruiterRepository
     {
-        Task<List<RecruiterMaster>> GetAllAsync();
-        Task<RecruiterMaster> GetByIdAsync(int id);
-        Task AddAsync(RecruiterMaster recruiter);
-        Task UpdateAsync(RecruiterMaster recruiter);
-        Task DeleteAsync(RecruiterMaster recruiter);
-        Task<List<RecruiterMaster>> GetActiveAsync();
+        Task<List<Recruiter>> GetAllAsync();
+        Task<Recruiter> GetByIdAsync(int id);
+        Task AddAsync(Recruiter recruiter);
+        Task UpdateAsync(Recruiter recruiter);
+        Task DeleteAsync(Recruiter recruiter);
+        Task<List<Recruiter>> GetActiveAsync();
 
 
     }

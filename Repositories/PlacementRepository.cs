@@ -14,43 +14,54 @@ namespace ComputerSeekho.API.Repositories
             _context = context;
         }
 
-        public async Task<List<PlacementMaster>> GetAllAsync()
+        public async Task<List<Placement>> GetAllAsync()
         {
             return await _context.PlacementMasters
                                  .Include(p => p.Recruiter)
                                  .ToListAsync();
         }
 
-        public async Task<PlacementMaster?> GetByIdAsync(int id)
+        public async Task<Placement?> GetByIdAsync(int id)
         {
             return await _context.PlacementMasters
                                  .Include(p => p.Recruiter)
                                  .FirstOrDefaultAsync(p => p.PlacementId == id);
         }
 
-        public async Task AddAsync(PlacementMaster placement)
+        public async Task AddAsync(Placement placement)
         {
             _context.PlacementMasters.Add(placement);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(PlacementMaster placement)
+        public async Task UpdateAsync(Placement placement)
         {
             _context.PlacementMasters.Update(placement);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(PlacementMaster placement)
+        public async Task DeleteAsync(Placement placement)
         {
             _context.PlacementMasters.Remove(placement);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<PlacementMaster>> GetPlacementsByRecruiterAsync(int recruiterId)
+        public async Task<List<Placement>> GetPlacementsByRecruiterAsync(int recruiterId)
         {
             return await _context.PlacementMasters
                 .AsNoTracking()
                 .Where(p => p.RecruiterId == recruiterId)
+                .ToListAsync();
+        }
+        // NEW METHOD
+        public async Task<List<Placement>> GetPlacementsByBatchAsync(int batchId)
+        {
+            return await _context.PlacementMasters
+                .AsNoTracking()
+                .Include(p => p.Student)
+                .Include(p => p.Recruiter)
+                .Include(p => p.Batch)
+                .Where(p => p.BatchId == batchId)
                 .ToListAsync();
         }
     }

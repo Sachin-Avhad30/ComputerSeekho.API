@@ -15,29 +15,29 @@ namespace ComputerSeekho.API.Repositories
             _context = context;
         }
 
-        public async Task<List<StudentMaster>> GetAllAsync()
+        public async Task<List<Student>> GetAllAsync()
         {
             return await _context.StudentMasters.ToListAsync();
         }
 
-        public async Task<StudentMaster> GetByIdAsync(int id)
+        public async Task<Student> GetByIdAsync(int id)
         {
             return await _context.StudentMasters.FindAsync(id);
         }
 
-        public async Task AddAsync(StudentMaster student)
+        public async Task AddAsync(Student student)
         {
             _context.StudentMasters.Add(student);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(StudentMaster student)
+        public async Task UpdateAsync(Student student)
         {
             _context.StudentMasters.Update(student);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(StudentMaster student)
+        public async Task DeleteAsync(Student student)
         {
             _context.StudentMasters.Remove(student);
             await _context.SaveChangesAsync();
