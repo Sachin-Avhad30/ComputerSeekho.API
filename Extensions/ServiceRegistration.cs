@@ -30,6 +30,15 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IFileStorageService, FileStorageService>();
             services.AddScoped<IBatchService, BatchService>();
 
+            // ========================================
+            // STAFF MODULE (Authentication & Management)
+            // ========================================
+            services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IStaffAuthService, StaffAuthService>();
+            services.AddScoped<IStaffService, StaffService>();
+
+
             return services;
         }
     }
