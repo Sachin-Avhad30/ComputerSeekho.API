@@ -21,7 +21,7 @@ namespace ComputerSeekho.API.Services
         }
 
         // GET
-        public async Task<List<StudentMaster>> GetAllAsync()
+        public async Task<List<Student>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
@@ -41,7 +41,7 @@ namespace ComputerSeekho.API.Services
                 );
             }
 
-            var student = new StudentMaster
+            var student = new Student
             {
                 BatchId = dto.BatchId,
                 CourseId = dto.CourseId,

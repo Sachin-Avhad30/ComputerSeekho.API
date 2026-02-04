@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ComputerSeekho.API.Entities
 {
     [Table("Placements_Master")]
-    public class PlacementMaster
+    public class Placement
     {
         [Key]
         [Column("placement_id")]
@@ -21,13 +21,13 @@ namespace ComputerSeekho.API.Entities
         public int RecruiterId { get; set; }
 
         [ForeignKey(nameof(StudentId))]
-        public StudentMaster? Student { get; set; }
+        public Student? Student { get; set; }
 
         [ForeignKey(nameof(BatchId))]
         public Batch? Batch { get; set; }
 
         [ForeignKey(nameof(RecruiterId))]
-        public RecruiterMaster? Recruiter { get; set; }
+        public Recruiter? Recruiter { get; set; }
     
 }
 }

@@ -21,7 +21,7 @@ namespace ComputerSeekho.API.Services
         }
 
         // GET
-        public async Task<List<PlacementMaster>> GetAllAsync()
+        public async Task<List<Placement>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
@@ -29,7 +29,7 @@ namespace ComputerSeekho.API.Services
         // POST
         public async Task CreateAsync(PlacementDto dto)
         {
-            var placement = new PlacementMaster
+            var placement = new Placement
             {
                 StudentId = dto.StudentId,
                 BatchId = dto.BatchId,
@@ -65,24 +65,68 @@ namespace ComputerSeekho.API.Services
 
         public async Task<List<PlacedStudentPhotoDto>> GetPlacedStudentPhotosAsync(int recruiterId)
         {
-            var placements = await _repository
-                .GetPlacementsByRecruiterAsync(recruiterId);
+            return await (
+        from p in _context.PlacementMasters
+        join s in _context.StudentMasters on p.StudentId equals s.StudentId
+        join r in _context.RecruiterMasters on p.RecruiterId equals r.RecruiterId
+        where p.RecruiterId == recruiterId
+              && s.PhotoUrl != null
+        select new PlacedStudentPhotoDto
+        {
+            StudentId = s.StudentId,
+            StudentName = s.StudentName,
+            PhotoUrl = s.PhotoUrl,
+            comapnyName = r.RecruiterName
+        }
+    )
+    .AsNoTracking()
+    .Distinct()
+    .ToListAsync();
+        }
+    
 
-            var studentIds = placements
-                .Select(p => p.StudentId)
-                .Distinct()
-                .ToList();
+    // NEW METHOD - Get all batches with placement count
+        public async Task<List<BatchPlacementSummaryDto>> GetBatchesWithPlacementsAsync()
+        {
+            return await (
+                from b in _context.Batches
+                join p in _context.PlacementMasters on b.BatchId equals p.BatchId
+                group p by new { b.BatchId, b.BatchName, b.BatchLogoUrl } into g
+                select new BatchPlacementSummaryDto
+                {
+                    BatchId = g.Key.BatchId,
+                    BatchName = g.Key.BatchName,
+                    BatchLogo = g.Key.BatchLogoUrl,
+                    PlacedStudentCount = g.Count()
+                }
+            )
+            .AsNoTracking()
+            .OrderByDescending(x => x.PlacedStudentCount)
+            .ToListAsync();
+        }
 
-            return await _context.StudentMasters
-                .AsNoTracking()
-                .Where(s => studentIds.Contains(s.StudentId)
-                            && s.PhotoUrl != null)
-                .Select(s => new PlacedStudentPhotoDto
+        // NEW METHOD - Get all placed students for a specific batch
+        public async Task<List<PlacedStudentDetailDto>> GetPlacedStudentsByBatchAsync(int batchId)
+        {
+            return await (
+                from p in _context.PlacementMasters
+                join s in _context.StudentMasters on p.StudentId equals s.StudentId
+                join r in _context.RecruiterMasters on p.RecruiterId equals r.RecruiterId
+                join b in _context.Batches on p.BatchId equals b.BatchId
+                where p.BatchId == batchId
+                select new PlacedStudentDetailDto
                 {
                     StudentId = s.StudentId,
-                    PhotoUrl = s.PhotoUrl
-                })
-                .ToListAsync();
+                    StudentName = s.StudentName,
+                    PhotoUrl = s.PhotoUrl,
+                    CompanyName = r.RecruiterName,
+                    CompanyLogo = r.LogoUrl,
+                    BatchId = b.BatchId,
+                    BatchName = b.BatchName
+                }
+            )
+            .AsNoTracking()
+            .ToListAsync();
         }
     }
 }

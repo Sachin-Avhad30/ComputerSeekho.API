@@ -11,9 +11,9 @@ namespace ComputerSeekho.API.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Announcement> Announcement { get; set; }
         public DbSet<Batch> Batches { get; set; }
-        public DbSet<RecruiterMaster> RecruiterMasters { get; set; }
-        public DbSet<PlacementMaster> PlacementMasters { get; set; }
-        public DbSet<StudentMaster> StudentMasters { get; set; }
+        public DbSet<Recruiter> RecruiterMasters { get; set; }
+        public DbSet<Placement> PlacementMasters { get; set; }
+        public DbSet<Student> StudentMasters { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

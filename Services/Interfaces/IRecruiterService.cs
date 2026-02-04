@@ -5,7 +5,7 @@ namespace ComputerSeekho.Application.Services.Interfaces
 {
     public interface IRecruiterService
     {
-        Task<List<RecruiterMaster>> GetAllAsync();
+        Task<List<Recruiter>> GetAllAsync();
         Task CreateAsync(RecruiterDto dto);
         Task UpdateAsync(int id, RecruiterDto dto);
         Task DeleteAsync(int id);

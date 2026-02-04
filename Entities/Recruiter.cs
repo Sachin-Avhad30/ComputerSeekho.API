@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace ComputerSeekho.API.Entities
 {
     [Table("Recruiter_Master")]
-    public class RecruiterMaster
+    public class Recruiter
     {
         [Key]
         [Column("recruiter_id")]
@@ -30,7 +30,7 @@ namespace ComputerSeekho.API.Entities
         public bool Status { get; set; } = true;
 
         [JsonIgnore]    
-        public ICollection<PlacementMaster>? Placements { get; set; }
+        public ICollection<Placement>? Placements { get; set; }
     }
 
 }
