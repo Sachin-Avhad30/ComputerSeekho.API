@@ -244,267 +244,268 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("is_active");
 
-                    b.Property<string>("PhotoUrl")
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
-                {
-                    b.Property<int>("PlacementId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("placement_id");
+                    b.Property<string>("PhotoUrl");
+                    modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
+                        {
+                            b.Property<int>("PlacementId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasColumnName("placement_id");
 
-                    b.Property<int>("BatchId")
-                        .HasColumnType("int")
-                        .HasColumnName("batch_id");
+                            b.Property<int>("BatchId")
+                                .HasColumnType("int")
+                                .HasColumnName("batch_id");
 
-                    b.Property<int>("RecruiterId")
-                        .HasColumnType("int")
-                        .HasColumnName("recruiter_id");
+                            b.Property<int>("RecruiterId")
+                                .HasColumnType("int")
+                                .HasColumnName("recruiter_id");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int")
-                        .HasColumnName("student_id");
+                            b.Property<int>("StudentId")
+                                .HasColumnType("int")
+                                .HasColumnName("student_id");
 
-                    b.HasKey("PlacementId");
+                            b.HasKey("PlacementId");
 
-                    b.HasIndex("BatchId");
+                            b.HasIndex("BatchId");
 
-                    b.HasIndex("RecruiterId");
+                            b.HasIndex("RecruiterId");
 
-                    b.HasIndex("StudentId");
+                            b.HasIndex("StudentId");
 
-                    b.ToTable("Placements_Master");
-                });
+                            b.ToTable("Placements_Master");
+                        });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
-                {
-                    b.Property<int>("RecruiterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("recruiter_id");
+                    modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
+                        {
+                            b.Property<int>("RecruiterId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasColumnName("recruiter_id");
 
-                    b.Property<string>("LogoUrl")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("logo_url");
+                            b.Property<string>("LogoUrl")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("logo_url");
 
-                    b.Property<string>("RecruiterName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("recruiter_name");
+                            b.Property<string>("RecruiterName")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("varchar(255)")
+                                .HasColumnName("recruiter_name");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("status");
+                            b.Property<bool>("Status")
+                                .HasColumnType("tinyint(1)")
+                                .HasColumnName("status");
 
-                    b.HasKey("RecruiterId");
+                            b.HasKey("RecruiterId");
 
-                    b.ToTable("Recruiter_Master");
-                });
+                            b.ToTable("Recruiter_Master");
+                        });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
-                {
-                    b.Property<int>("StudentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("student_id");
+                    modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
+                        {
+                            b.Property<int>("StudentId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasColumnName("student_id");
 
-                    b.Property<int?>("BatchId")
-                        .HasColumnType("int")
-                        .HasColumnName("batch_id");
+                            b.Property<int?>("BatchId")
+                                .HasColumnType("int")
+                                .HasColumnName("batch_id");
 
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int")
-                        .HasColumnName("course_id");
+                            b.Property<int?>("CourseId")
+                                .HasColumnType("int")
+                                .HasColumnName("course_id");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
+                            b.Property<DateTime>("CreatedAt")
+                                .HasColumnType("datetime(6)")
+                                .HasColumnName("created_at");
 
-                    b.Property<string>("PhotoUrl")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("photo_url");
+                            b.Property<string>("PhotoUrl")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("varchar(255)")
+                                .HasColumnName("photo_url");
 
-                    b.Property<string>("StaffBio")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("staff_bio");
+                            b.Property<string>("StaffBio")
+                                .HasColumnType("TEXT")
+                                .HasColumnName("staff_bio");
 
-                    b.Property<string>("StaffDesignation")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_designation");
+                            b.Property<string>("StaffDesignation")
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("staff_designation");
 
-                    b.Property<string>("StaffEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_email");
+                            b.Property<string>("StaffEmail")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("staff_email");
 
-                    b.Property<string>("StaffMobile")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("staff_mobile");
+                            b.Property<string>("StaffMobile")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("staff_mobile");
 
-                    b.Property<string>("StaffName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_name");
+                            b.Property<string>("StaffName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("staff_name");
 
-                    b.Property<string>("StaffPassword")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("staff_password");
+                            b.Property<string>("StaffPassword")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("varchar(255)")
+                                .HasColumnName("staff_password");
 
-                    b.Property<string>("StaffRole")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("staff_role");
+                            b.Property<string>("StaffRole")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("varchar(50)")
+                                .HasColumnName("staff_role");
 
-                    b.Property<string>("StaffUsername")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_username");
+                            b.Property<string>("StaffUsername")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("staff_username");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                            b.Property<DateTime>("UpdatedAt")
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("datetime(6)")
+                                .HasColumnName("updated_at")
+                                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.HasKey("StaffId");
+                            b.HasKey("StaffId");
 
-                    b.HasIndex("StaffEmail")
-                        .IsUnique();
+                            b.HasIndex("StaffEmail")
+                                .IsUnique();
 
-                    b.HasIndex("StaffUsername")
-                        .IsUnique();
+                            b.HasIndex("StaffUsername")
+                                .IsUnique();
 
-                    b.ToTable("staff_master");
-                    b.Property<int>("RegistrationStatus")
-                        .HasColumnType("int")
-                        .HasColumnName("registration_status");
+                            b.ToTable("staff_master");
+                            b.Property<int>("RegistrationStatus")
+                                .HasColumnType("int")
+                                .HasColumnName("registration_status");
 
-                    b.Property<string>("StudentAddress")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("student_address");
+                            b.Property<string>("StudentAddress")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("varchar(200)")
+                                .HasColumnName("student_address");
 
-                    b.Property<DateTime?>("StudentDob")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("student_dob");
+                            b.Property<DateTime?>("StudentDob")
+                                .HasColumnType("datetime(6)")
+                                .HasColumnName("student_dob");
 
-                    b.Property<string>("StudentGender")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("student_gender");
+                            b.Property<string>("StudentGender")
+                                .IsRequired()
+                                .HasMaxLength(10)
+                                .HasColumnType("varchar(10)")
+                                .HasColumnName("student_gender");
 
-                    b.Property<long>("StudentMobile")
-                        .HasColumnType("bigint")
-                        .HasColumnName("student_mobile");
+                            b.Property<long>("StudentMobile")
+                                .HasColumnType("bigint")
+                                .HasColumnName("student_mobile");
 
-                    b.Property<string>("StudentName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("student_name");
+                            b.Property<string>("StudentName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("student_name");
 
-                    b.Property<string>("StudentPassword")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("student_password");
+                            b.Property<string>("StudentPassword")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("varchar(255)")
+                                .HasColumnName("student_password");
 
-                    b.Property<string>("StudentQualification")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("student_qualification");
+                            b.Property<string>("StudentQualification")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("varchar(50)")
+                                .HasColumnName("student_qualification");
 
-                    b.Property<string>("StudentUsername")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("student_username");
+                            b.Property<string>("StudentUsername")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("student_username");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
+                            b.Property<DateTime>("UpdatedAt")
+                                .HasColumnType("datetime(6)")
+                                .HasColumnName("updated_at");
 
-                    b.HasKey("StudentId");
+                            b.HasKey("StudentId");
 
-                    b.HasIndex("BatchId");
+                            b.HasIndex("BatchId");
 
-                    b.HasIndex("CourseId");
+                            b.HasIndex("CourseId");
 
-                    b.ToTable("student_master");
-                });
+                            b.ToTable("student_master");
+                        });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Batch", b =>
-                {
-                    b.HasOne("ComputerSeekho.API.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    modelBuilder.Entity("ComputerSeekho.API.Entities.Batch", b =>
+                        {
+                            b.HasOne("ComputerSeekho.API.Entities.Course", "Course")
+                                .WithMany()
+                                .HasForeignKey("CourseId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
 
-                    b.Navigation("Course");
-                });
+                            b.Navigation("Course");
+                        });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
-                {
-                    b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
-                        .WithMany()
-                        .HasForeignKey("BatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
+                        {
+                            b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
+                                .WithMany()
+                                .HasForeignKey("BatchId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("ComputerSeekho.API.Entities.Recruiter", "Recruiter")
-                        .WithMany("Placements")
-                        .HasForeignKey("RecruiterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                            b.HasOne("ComputerSeekho.API.Entities.Recruiter", "Recruiter")
+                                .WithMany("Placements")
+                                .HasForeignKey("RecruiterId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("ComputerSeekho.API.Entities.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                            b.HasOne("ComputerSeekho.API.Entities.Student", "Student")
+                                .WithMany()
+                                .HasForeignKey("StudentId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("Batch");
+                            b.Navigation("Batch");
 
-                    b.Navigation("Recruiter");
+                            b.Navigation("Recruiter");
 
-                    b.Navigation("Student");
-                });
+                            b.Navigation("Student");
+                        });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
-                {
-                    b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
-                        .WithMany()
-                        .HasForeignKey("BatchId");
+                    modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
+                        {
+                            b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
+                                .WithMany()
+                                .HasForeignKey("BatchId");
 
-                    b.HasOne("ComputerSeekho.API.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId");
+                            b.HasOne("ComputerSeekho.API.Entities.Course", "Course")
+                                .WithMany()
+                                .HasForeignKey("CourseId");
 
-                    b.Navigation("Batch");
+                            b.Navigation("Batch");
 
-                    b.Navigation("Course");
-                });
+                            b.Navigation("Course");
+                        });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
-                {
-                    b.Navigation("Placements");
-                });
+                    modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
+                        {
+                            b.Navigation("Placements");
+                        });
 #pragma warning restore 612, 618
+                });
         }
     }
 }

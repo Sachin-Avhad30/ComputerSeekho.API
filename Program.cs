@@ -58,7 +58,7 @@ app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 // ⚠️ ORDER MATTERS! CORS must come BEFORE Authentication
-app.UseCors("AllowReactApp");
+
 
 // Authentication & Authorization
 app.UseAuthentication();

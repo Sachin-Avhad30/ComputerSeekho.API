@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ComputerSeekho.API.Entities
 {
     [Table("staff_master")]
-    public class Staff
+    public class Staff : BaseEntity
     {
         [Key]
         [Column("staff_id")]
@@ -55,13 +55,5 @@ namespace ComputerSeekho.API.Entities
         [StringLength(100)]
         [Column("staff_designation")]
         public string? StaffDesignation { get; set; }
-
-        [Column("created_at")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        [Column("updated_at")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }

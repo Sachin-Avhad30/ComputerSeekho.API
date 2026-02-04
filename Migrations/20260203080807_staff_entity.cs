@@ -28,8 +28,9 @@ namespace ComputerSeekho.API.Migrations
                     is_active = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     staff_bio = table.Column<string>(type: "TEXT", nullable: true),
                     staff_designation = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
+                    created_at = table.Column<DateTime>(type: "datetime", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime", nullable: false),
+
                 },
                 constraints: table =>
                 {

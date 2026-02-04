@@ -34,12 +34,6 @@ namespace ComputerSeekho.API.Data
                 entity.HasIndex(e => e.StaffEmail)
                     .IsUnique();
 
-                entity.Property(e => e.CreatedAt)
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.UpdatedAt)
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                    .ValueGeneratedOnAddOrUpdate();
             });
 
             modelBuilder.Entity<Course>(entity =>
