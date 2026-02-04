@@ -15,6 +15,7 @@ namespace ComputerSeekho.API.Data
         public DbSet<PlacementMaster> PlacementMasters { get; set; }
         public DbSet<StudentMaster> StudentMasters { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Staff> Staff { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -91,6 +92,34 @@ namespace ComputerSeekho.API.Data
                 entity.HasIndex(e => e.IsActive);
                 entity.HasIndex(e => new { e.ValidFrom, e.ValidTo });
             });
+
+
+            //Staff
+
+           
+
+            // Configure unique constraints
+            modelBuilder.Entity<Staff>()
+                .HasIndex(s => s.StaffUsername)
+                .IsUnique();
+
+            modelBuilder.Entity<Staff>()
+                .HasIndex(s => s.StaffEmail)
+                .IsUnique();
+
+            // Set default values
+            modelBuilder.Entity<Staff>()
+                .Property(s => s.IsActive)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<Staff>()
+                .Property(s => s.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Staff>()
+                .Property(s => s.UpdatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .ValueGeneratedOnAddOrUpdate();
         }
 
         public override int SaveChanges()

@@ -6,6 +6,7 @@ using ComputerSeekho.Application.Services.Interfaces;
 using ComputerSeekho.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using ComputerSeekho.API.Services.Interfaces;
+using ComputerSeekho.API.Security.JWT;
 
 namespace ComputerSeekho.API.Extensions
 {
@@ -38,6 +39,12 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IPlacementService, PlacementService>();
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<IEmailService, EmailService>();
+
+
+            services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IStaffAuthService, StaffAuthService>();
+            services.AddScoped<IFileStorageService, FileStorageService>();
+            services.AddSingleton<IJwtUtils, JwtUtils>();
 
             return services;
         }
