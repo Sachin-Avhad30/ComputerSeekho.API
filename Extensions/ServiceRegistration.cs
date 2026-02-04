@@ -24,11 +24,20 @@ namespace ComputerSeekho.API.Extensions
             //  Repositories
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IBatchRepository,BatchRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IPlacementRepository, PlacementRepository>();
+            services.AddScoped<IRecruiterRepository, RecruiterRepository>();
 
+            services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             // Services
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IFileStorageService, FileStorageService>();
             services.AddScoped<IBatchService, BatchService>();
+            services.AddScoped<IRecruiterService, RecruiterService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IPlacementService, PlacementService>();
+            services.AddScoped<IAnnouncementService, AnnouncementService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             // ========================================
             // STAFF MODULE (Authentication & Management)

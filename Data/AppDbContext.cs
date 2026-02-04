@@ -9,7 +9,12 @@ namespace ComputerSeekho.API.Data
             : base(options) { }
 
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Announcement> Announcement { get; set; }
         public DbSet<Batch> Batches { get; set; }
+        public DbSet<Recruiter> RecruiterMasters { get; set; }
+        public DbSet<Placement> PlacementMasters { get; set; }
+        public DbSet<Student> StudentMasters { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
 
         // DbSets
         public DbSet<Staff> Staff { get; set; }
@@ -91,6 +96,23 @@ namespace ComputerSeekho.API.Data
                 entity.Property(e => e.IsActive)
                       .HasDefaultValue(true);
             });
+
+
+            modelBuilder.Entity<Announcement>(entity =>
+            {
+                entity.HasKey(e => e.AnnouncementId);
+
+                entity.Property(e => e.AnnouncementText)
+                    .IsRequired()
+                    .HasColumnType("TEXT");
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValue(true);
+
+                // Indexes for better query performance
+                entity.HasIndex(e => e.IsActive);
+                entity.HasIndex(e => new { e.ValidFrom, e.ValidTo });
+            });
         }
 
         public override int SaveChanges()
@@ -107,26 +129,42 @@ namespace ComputerSeekho.API.Data
 
         private void UpdateTimestamps()
         {
-            var entries = ChangeTracker.Entries()
-                .Where(e => e.Entity is Course &&
-                           (e.State == EntityState.Added || e.State == EntityState.Modified));
+            //var entries = ChangeTracker.Entries()
+            //    .Where(e => e.Entity is Course &&
+            //               (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+            //foreach (var entry in entries)
+            //{
+            //    var course = (Course)entry.Entity;
+
+            //    if (entry.State == EntityState.Added)
+            //    {
+            //        course.CreatedAt = DateTime.Now;
+            //        course.UpdatedAt = DateTime.Now;
+            //    }
+            //    else if (entry.State == EntityState.Modified)
+            //    {
+            //        course.UpdatedAt = DateTime.Now;
+
+            //        // prevent CreatedAt from being updated
+            //        entry.Property(nameof(Course.CreatedAt)).IsModified = false;
+            //    }
+
+
+
+            //}
+
+            var entries = ChangeTracker.Entries<BaseEntity>()
+        .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
             foreach (var entry in entries)
             {
-                var course = (Course)entry.Entity;
-
                 if (entry.State == EntityState.Added)
                 {
-                    course.CreatedAt = DateTime.Now;
-                    course.UpdatedAt = DateTime.Now;
+                    entry.Entity.CreatedAt = DateTime.Now;
                 }
-                else if (entry.State == EntityState.Modified)
-                {
-                    course.UpdatedAt = DateTime.Now;
 
-                    // prevent CreatedAt from being updated
-                    entry.Property(nameof(Course.CreatedAt)).IsModified = false;
-                }
+                entry.Entity.UpdatedAt = DateTime.Now;
             }
         }
 

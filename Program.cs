@@ -22,6 +22,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfiguration();  // ✅ Use custom Swagger config
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .AllowAnyOrigin()     
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // ========================================
@@ -29,6 +40,7 @@ var app = builder.Build();
 // ========================================
 
 // Development tools
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -50,6 +62,9 @@ app.UseCors("AllowReactApp");
 
 // Authentication & Authorization
 app.UseAuthentication();
+
+app.UseCors("AllowFrontend");
+
 app.UseAuthorization();
 
 // Map Controllers

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComputerSeekho.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260202165631_annoucement_entity")]
+    [Migration("20260203041718_annoucement_entity")]
     partial class annoucement_entity
     {
         /// <inheritdoc />
@@ -21,6 +21,49 @@ namespace ComputerSeekho.API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("ComputerSeekho.API.Entities.Announcement", b =>
+                {
+                    b.Property<int>("AnnouncementId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("announcement_id");
+
+                    b.Property<string>("AnnouncementText")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("announcement_text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true)
+                        .HasColumnName("is_active");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.Property<DateTime>("ValidFrom")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("valid_from");
+
+                    b.Property<DateTime>("ValidTo")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("valid_to");
+
+                    b.HasKey("AnnouncementId");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("ValidFrom", "ValidTo");
+
+                    b.ToTable("announcement_master");
+                });
 
             modelBuilder.Entity("ComputerSeekho.API.Entities.Batch", b =>
                 {

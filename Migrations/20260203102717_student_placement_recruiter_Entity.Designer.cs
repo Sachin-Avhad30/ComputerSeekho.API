@@ -3,6 +3,7 @@ using System;
 using ComputerSeekho.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComputerSeekho.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203102717_student_placement_recruiter_Entity")]
+    partial class student_placement_recruiter_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +31,7 @@ namespace ComputerSeekho.API.Migrations
 
                     b.Property<string>("AnnouncementText")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("announcement_text");
 
                     b.Property<DateTime>("CreatedAt")
@@ -36,9 +39,7 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(true)
                         .HasColumnName("is_active");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -54,10 +55,6 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnName("valid_to");
 
                     b.HasKey("AnnouncementId");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("ValidFrom", "ValidTo");
 
                     b.ToTable("announcement_master");
                 });
@@ -227,25 +224,7 @@ namespace ComputerSeekho.API.Migrations
                     b.ToTable("course_master");
                 });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Staff", b =>
-                {
-                    b.Property<int>("StaffId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("staff_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("is_active");
-
-                    b.Property<string>("PhotoUrl")
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
+            modelBuilder.Entity("ComputerSeekho.API.Entities.PlacementMaster", b =>
                 {
                     b.Property<int>("PlacementId")
                         .ValueGeneratedOnAdd()
@@ -275,7 +254,7 @@ namespace ComputerSeekho.API.Migrations
                     b.ToTable("Placements_Master");
                 });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
+            modelBuilder.Entity("ComputerSeekho.API.Entities.RecruiterMaster", b =>
                 {
                     b.Property<int>("RecruiterId")
                         .ValueGeneratedOnAdd()
@@ -302,7 +281,7 @@ namespace ComputerSeekho.API.Migrations
                     b.ToTable("Recruiter_Master");
                 });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
+            modelBuilder.Entity("ComputerSeekho.API.Entities.StudentMaster", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
@@ -317,7 +296,7 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnType("int")
                         .HasColumnName("course_id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
@@ -327,65 +306,6 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("photo_url");
 
-                    b.Property<string>("StaffBio")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("staff_bio");
-
-                    b.Property<string>("StaffDesignation")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_designation");
-
-                    b.Property<string>("StaffEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_email");
-
-                    b.Property<string>("StaffMobile")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("staff_mobile");
-
-                    b.Property<string>("StaffName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_name");
-
-                    b.Property<string>("StaffPassword")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("staff_password");
-
-                    b.Property<string>("StaffRole")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("staff_role");
-
-                    b.Property<string>("StaffUsername")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_username");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.HasKey("StaffId");
-
-                    b.HasIndex("StaffEmail")
-                        .IsUnique();
-
-                    b.HasIndex("StaffUsername")
-                        .IsUnique();
-
-                    b.ToTable("staff_master");
                     b.Property<int>("RegistrationStatus")
                         .HasColumnType("int")
                         .HasColumnName("registration_status");
@@ -434,15 +354,11 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("student_username");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.HasKey("StudentId");
-
-                    b.HasIndex("BatchId");
-
-                    b.HasIndex("CourseId");
 
                     b.ToTable("student_master");
                 });
@@ -458,7 +374,7 @@ namespace ComputerSeekho.API.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
+            modelBuilder.Entity("ComputerSeekho.API.Entities.PlacementMaster", b =>
                 {
                     b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
                         .WithMany()
@@ -466,13 +382,13 @@ namespace ComputerSeekho.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ComputerSeekho.API.Entities.Recruiter", "Recruiter")
+                    b.HasOne("ComputerSeekho.API.Entities.RecruiterMaster", "Recruiter")
                         .WithMany("Placements")
                         .HasForeignKey("RecruiterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ComputerSeekho.API.Entities.Student", "Student")
+                    b.HasOne("ComputerSeekho.API.Entities.StudentMaster", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -485,22 +401,7 @@ namespace ComputerSeekho.API.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
-                {
-                    b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
-                        .WithMany()
-                        .HasForeignKey("BatchId");
-
-                    b.HasOne("ComputerSeekho.API.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId");
-
-                    b.Navigation("Batch");
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
+            modelBuilder.Entity("ComputerSeekho.API.Entities.RecruiterMaster", b =>
                 {
                     b.Navigation("Placements");
                 });

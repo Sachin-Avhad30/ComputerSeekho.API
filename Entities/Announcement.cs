@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ComputerSeekho.API.Entities
 {
     [Table("announcement_master")]
-    public class Announcement
+    public class Announcement :BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,11 +25,5 @@ namespace ComputerSeekho.API.Entities
 
         [Column("is_active")]
         public bool IsActive { get; set; } = true;
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-
-        [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
     }
 }

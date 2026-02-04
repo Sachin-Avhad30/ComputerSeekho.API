@@ -3,6 +3,7 @@ using System;
 using ComputerSeekho.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComputerSeekho.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203160000_update_student_entity")]
+    partial class update_student_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,24 +230,6 @@ namespace ComputerSeekho.API.Migrations
                     b.ToTable("course_master");
                 });
 
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Staff", b =>
-                {
-                    b.Property<int>("StaffId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("staff_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("is_active");
-
-                    b.Property<string>("PhotoUrl")
             modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
                 {
                     b.Property<int>("PlacementId")
@@ -327,65 +312,6 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("photo_url");
 
-                    b.Property<string>("StaffBio")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("staff_bio");
-
-                    b.Property<string>("StaffDesignation")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_designation");
-
-                    b.Property<string>("StaffEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_email");
-
-                    b.Property<string>("StaffMobile")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("staff_mobile");
-
-                    b.Property<string>("StaffName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_name");
-
-                    b.Property<string>("StaffPassword")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("staff_password");
-
-                    b.Property<string>("StaffRole")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("staff_role");
-
-                    b.Property<string>("StaffUsername")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("staff_username");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.HasKey("StaffId");
-
-                    b.HasIndex("StaffEmail")
-                        .IsUnique();
-
-                    b.HasIndex("StaffUsername")
-                        .IsUnique();
-
-                    b.ToTable("staff_master");
                     b.Property<int>("RegistrationStatus")
                         .HasColumnType("int")
                         .HasColumnName("registration_status");
