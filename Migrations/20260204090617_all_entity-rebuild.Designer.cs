@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComputerSeekho.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260203160000_update_student_entity")]
-    partial class update_student_entity
+    [Migration("20260204090617_all_entity-rebuild")]
+    partial class all_entityrebuild
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,49 @@ namespace ComputerSeekho.API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("ComputerSeekho.API.Entities.Album", b =>
+                {
+                    b.Property<int>("AlbumId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("album_id");
+
+                    b.Property<string>("AlbumDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("album_description");
+
+                    b.Property<bool>("AlbumIsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("album_is_active");
+
+                    b.Property<string>("AlbumName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("album_name");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("end_date");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("start_date");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("AlbumId");
+
+                    b.ToTable("album_master");
+                });
 
             modelBuilder.Entity("ComputerSeekho.API.Entities.Announcement", b =>
                 {
@@ -230,6 +273,42 @@ namespace ComputerSeekho.API.Migrations
                     b.ToTable("course_master");
                 });
 
+            modelBuilder.Entity("ComputerSeekho.API.Entities.Image", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("image_id");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int")
+                        .HasColumnName("album_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("ImageIsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("image_is_active");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("image_path");
+
+                    b.Property<bool>("IsAlbumCover")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_album_cover");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("AlbumId");
+
+                    b.ToTable("image_master");
+                });
+
             modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
                 {
                     b.Property<int>("PlacementId")
@@ -285,6 +364,85 @@ namespace ComputerSeekho.API.Migrations
                     b.HasKey("RecruiterId");
 
                     b.ToTable("Recruiter_Master");
+                });
+
+            modelBuilder.Entity("ComputerSeekho.API.Entities.Staff", b =>
+                {
+                    b.Property<int>("StaffId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("staff_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_active");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("photo_url");
+
+                    b.Property<string>("StaffBio")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("staff_bio");
+
+                    b.Property<string>("StaffDesignation")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("staff_designation");
+
+                    b.Property<string>("StaffEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("staff_email");
+
+                    b.Property<string>("StaffMobile")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("staff_mobile");
+
+                    b.Property<string>("StaffName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("staff_name");
+
+                    b.Property<string>("StaffPassword")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("staff_password");
+
+                    b.Property<string>("StaffRole")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("staff_role");
+
+                    b.Property<string>("StaffUsername")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("staff_username");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("StaffId");
+
+                    b.HasIndex("StaffEmail")
+                        .IsUnique();
+
+                    b.HasIndex("StaffUsername")
+                        .IsUnique();
+
+                    b.ToTable("staff_master");
                 });
 
             modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
@@ -384,6 +542,17 @@ namespace ComputerSeekho.API.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("ComputerSeekho.API.Entities.Image", b =>
+                {
+                    b.HasOne("ComputerSeekho.API.Entities.Album", "Album")
+                        .WithMany("Images")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+                });
+
             modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
                 {
                     b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
@@ -424,6 +593,11 @@ namespace ComputerSeekho.API.Migrations
                     b.Navigation("Batch");
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("ComputerSeekho.API.Entities.Album", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
