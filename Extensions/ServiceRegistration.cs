@@ -39,6 +39,15 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<IEmailService, EmailService>();
 
+            // ========================================
+            // STAFF MODULE (Authentication & Management)
+            // ========================================
+            services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IStaffAuthService, StaffAuthService>();
+            services.AddScoped<IStaffService, StaffService>();
+
+
             return services;
         }
     }

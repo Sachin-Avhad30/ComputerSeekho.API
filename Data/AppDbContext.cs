@@ -16,9 +16,31 @@ namespace ComputerSeekho.API.Data
         public DbSet<Student> StudentMasters { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
 
+        // DbSets
+        public DbSet<Staff> Staff { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Staff Entity Configuration
+            modelBuilder.Entity<Staff>(entity =>
+            {
+                entity.HasKey(e => e.StaffId);
+
+                entity.HasIndex(e => e.StaffUsername)
+                    .IsUnique();
+
+                entity.HasIndex(e => e.StaffEmail)
+                    .IsUnique();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
+            });
 
             modelBuilder.Entity<Course>(entity =>
             {

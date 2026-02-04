@@ -3,6 +3,7 @@ using System;
 using ComputerSeekho.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,57 +11,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComputerSeekho.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203080807_staff_entity")]
+    partial class staff_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Announcement", b =>
-                {
-                    b.Property<int>("AnnouncementId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("announcement_id");
-
-                    b.Property<string>("AnnouncementText")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("announcement_text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(true)
-                        .HasColumnName("is_active");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
-
-                    b.Property<DateTime>("ValidFrom")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("valid_from");
-
-                    b.Property<DateTime>("ValidTo")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("valid_to");
-
-                    b.HasKey("AnnouncementId");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("ValidFrom", "ValidTo");
-
-                    b.ToTable("announcement_master");
-                });
 
             modelBuilder.Entity("ComputerSeekho.API.Entities.Batch", b =>
                 {
@@ -245,84 +205,6 @@ namespace ComputerSeekho.API.Migrations
                         .HasColumnName("is_active");
 
                     b.Property<string>("PhotoUrl")
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
-                {
-                    b.Property<int>("PlacementId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("placement_id");
-
-                    b.Property<int>("BatchId")
-                        .HasColumnType("int")
-                        .HasColumnName("batch_id");
-
-                    b.Property<int>("RecruiterId")
-                        .HasColumnType("int")
-                        .HasColumnName("recruiter_id");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int")
-                        .HasColumnName("student_id");
-
-                    b.HasKey("PlacementId");
-
-                    b.HasIndex("BatchId");
-
-                    b.HasIndex("RecruiterId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Placements_Master");
-                });
-
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
-                {
-                    b.Property<int>("RecruiterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("recruiter_id");
-
-                    b.Property<string>("LogoUrl")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("logo_url");
-
-                    b.Property<string>("RecruiterName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("recruiter_name");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("status");
-
-                    b.HasKey("RecruiterId");
-
-                    b.ToTable("Recruiter_Master");
-                });
-
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
-                {
-                    b.Property<int>("StudentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("student_id");
-
-                    b.Property<int?>("BatchId")
-                        .HasColumnType("int")
-                        .HasColumnName("batch_id");
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int")
-                        .HasColumnName("course_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("PhotoUrl")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("photo_url");
@@ -386,65 +268,6 @@ namespace ComputerSeekho.API.Migrations
                         .IsUnique();
 
                     b.ToTable("staff_master");
-                    b.Property<int>("RegistrationStatus")
-                        .HasColumnType("int")
-                        .HasColumnName("registration_status");
-
-                    b.Property<string>("StudentAddress")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("student_address");
-
-                    b.Property<DateTime?>("StudentDob")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("student_dob");
-
-                    b.Property<string>("StudentGender")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("student_gender");
-
-                    b.Property<long>("StudentMobile")
-                        .HasColumnType("bigint")
-                        .HasColumnName("student_mobile");
-
-                    b.Property<string>("StudentName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("student_name");
-
-                    b.Property<string>("StudentPassword")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("student_password");
-
-                    b.Property<string>("StudentQualification")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("student_qualification");
-
-                    b.Property<string>("StudentUsername")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("student_username");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("StudentId");
-
-                    b.HasIndex("BatchId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("student_master");
                 });
 
             modelBuilder.Entity("ComputerSeekho.API.Entities.Batch", b =>
@@ -456,53 +279,6 @@ namespace ComputerSeekho.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Placement", b =>
-                {
-                    b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
-                        .WithMany()
-                        .HasForeignKey("BatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ComputerSeekho.API.Entities.Recruiter", "Recruiter")
-                        .WithMany("Placements")
-                        .HasForeignKey("RecruiterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ComputerSeekho.API.Entities.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Batch");
-
-                    b.Navigation("Recruiter");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Student", b =>
-                {
-                    b.HasOne("ComputerSeekho.API.Entities.Batch", "Batch")
-                        .WithMany()
-                        .HasForeignKey("BatchId");
-
-                    b.HasOne("ComputerSeekho.API.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId");
-
-                    b.Navigation("Batch");
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("ComputerSeekho.API.Entities.Recruiter", b =>
-                {
-                    b.Navigation("Placements");
                 });
 #pragma warning restore 612, 618
         }
