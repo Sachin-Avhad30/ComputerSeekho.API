@@ -50,6 +50,11 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IStaffAuthService, StaffAuthService>();
             services.AddScoped<IStaffService, StaffService>();
 
+            // ========================================
+            // ENQUIRY MODULE
+            // ========================================
+            services.AddScoped<IEnquiryRepository, EnquiryRepository>();
+            services.AddScoped<IEnquiryService, EnquiryService>();
 
             return services;
         }
