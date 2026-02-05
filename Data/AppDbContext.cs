@@ -1,5 +1,5 @@
 ﻿using ComputerSeekho.API.Entities;
-using ComputerSeekho.API.Enum;
+using ComputerSeekho.API.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace ComputerSeekho.API.Data
@@ -11,7 +11,6 @@ namespace ComputerSeekho.API.Data
 
        
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Batch> Batches { get; set; }
         public DbSet<Recruiter> RecruiterMasters { get; set; }
         public DbSet<Placement> PlacementMasters { get; set; }
@@ -164,7 +163,7 @@ namespace ComputerSeekho.API.Data
             // Configure StudentMaster for Registration Status
             // NOTE: Check if your StudentMaster entity has RegistrationStatus property
             // If not, you can skip this or add the property to StudentMaster
-            modelBuilder.Entity<StudentMaster>(entity =>
+            modelBuilder.Entity<Student>(entity =>
             {
                 // Only add this if you've added RegistrationStatus property to StudentMaster
                 // entity.Property(s => s.RegistrationStatus)

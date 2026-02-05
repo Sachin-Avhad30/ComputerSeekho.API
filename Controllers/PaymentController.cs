@@ -21,6 +21,7 @@ namespace ComputerSeekho.API.Controllers
 
         /// <summary>
         /// Get installment calculation for a student in a batch
+        /// Shows: Total Fees, Amount Paid, Remaining Balance, Previous Payments
         /// </summary>
         [HttpGet("installment-calculation")]
         [ProducesResponseType(typeof(InstallmentCalculationDTO), StatusCodes.Status200OK)]
@@ -50,6 +51,7 @@ namespace ComputerSeekho.API.Controllers
 
         /// <summary>
         /// Process a new payment for a student
+        /// IMPORTANT: First call GET /installment-calculation to see remaining balance!
         /// </summary>
         [HttpPost]
         [ProducesResponseType(typeof(PaymentDTO), StatusCodes.Status201Created)]
@@ -84,6 +86,7 @@ namespace ComputerSeekho.API.Controllers
 
         /// <summary>
         /// Get payment summary for a student in a batch
+        /// Shows complete payment history with totals
         /// </summary>
         [HttpGet("student-summary")]
         [ProducesResponseType(typeof(StudentPaymentSummaryDTO), StatusCodes.Status200OK)]
@@ -111,7 +114,7 @@ namespace ComputerSeekho.API.Controllers
         }
 
         /// <summary>
-        /// Get all payments for a student
+        /// Get all payments for a student (across all batches)
         /// </summary>
         [HttpGet("student/{studentId}")]
         [ProducesResponseType(typeof(List<PaymentDTO>), StatusCodes.Status200OK)]
@@ -157,6 +160,8 @@ namespace ComputerSeekho.API.Controllers
 
         /// <summary>
         /// Generate receipt for a payment
+        /// Receipt includes: Student details, Batch/Course info, All previous payments, Balance summary
+        /// You can generate receipt multiple times for the same payment
         /// </summary>
         [HttpPost("{paymentId}/receipt")]
         [ProducesResponseType(typeof(ReceiptDTO), StatusCodes.Status201Created)]
@@ -181,6 +186,31 @@ namespace ComputerSeekho.API.Controllers
             {
                 _logger.LogError(ex, "Error generating receipt for payment {PaymentId}", paymentId);
                 return StatusCode(500, new { message = "Error generating receipt" });
+            }
+        }
+
+        /// <summary>
+        /// Generate receipt PDF and send it to student's email
+        /// </summary>
+        [HttpGet("receipt/{receiptId}/email")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<string>> SendReceiptEmail(int receiptId)
+        {
+            try
+            {
+                var result = await _paymentService.GeneratePdfAndSendEmailAsync(receiptId);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex, "Receipt not found: {ReceiptId}", receiptId);
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending receipt email for {ReceiptId}", receiptId);
+                return StatusCode(500, new { message = "Error sending receipt email: " + ex.Message });
             }
         }
     }

@@ -60,6 +60,9 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IEnquiryService, EnquiryService>();
 
             services.AddScoped<IPaymentService, PaymentService>();
+
+            // PDF Service (NEW)
+            services.AddScoped<PdfService>();
             return services;
         }
     }

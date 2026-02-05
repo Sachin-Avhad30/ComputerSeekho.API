@@ -1,6 +1,6 @@
-﻿using ComputerSeekho.API.Enum;
-using ComputerSeekho.API.Enum;
+﻿
 using ComputerSeekho.API.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace ComputerSeekho.API.DTOs
 {
@@ -17,7 +17,11 @@ namespace ComputerSeekho.API.DTOs
         public string StudentAddress { get; set; }
         public string StudentQualification { get; set; }
 
-        public string StudentUsername { get; set; }
+        // USERNAME IS EMAIL
+        [Required]
+        [EmailAddress]
+        [MaxLength(100)]
+        public string StudentUsername { get; set; } // This IS the email!
         public string StudentPassword { get; set; }
 
         //public string PhotoUrl { get; set; }

@@ -21,5 +21,11 @@ namespace ComputerSeekho.API.Services.Interfaces
 
         // Generate receipt for a payment
         Task<ReceiptDTO?> GenerateReceiptAsync(int paymentId);
+
+        // Get receipt PDF data
+        Task<PaymentPdfDTO?> GetReceiptPdfDataAsync(int receiptId);
+
+        // Generate PDF and send email
+        Task<string> GeneratePdfAndSendEmailAsync(int receiptId);
     }
 }

@@ -5,14 +5,12 @@ using ComputerSeekho.API.Repositories.Interfaces;
 using ComputerSeekho.API.Services.Interfaces;
 using ComputerSeekho.Application.Services.Interfaces;
 
-
 namespace ComputerSeekho.API.Services
 {
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _repository;
         private readonly IFileStorageService _fileStorage;
-
 
         public StudentService(IStudentRepository repository, IFileStorageService fileStorage)
         {
@@ -51,10 +49,9 @@ namespace ComputerSeekho.API.Services
                 StudentDob = dto.StudentDob,
                 StudentAddress = dto.StudentAddress,
                 StudentQualification = dto.StudentQualification,
-                StudentUsername = dto.StudentUsername,
+                StudentUsername = dto.StudentUsername, // This IS the email
                 StudentPassword = dto.StudentPassword,
-
-                PhotoUrl = photoUrl, // 🔥 SAVE PATH
+                PhotoUrl = photoUrl,
                 RegistrationStatus = dto.RegistrationStatus,
                 CreatedAt = DateTime.UtcNow
             };
@@ -95,7 +92,7 @@ namespace ComputerSeekho.API.Services
             student.StudentDob = dto.StudentDob;
             student.StudentAddress = dto.StudentAddress;
             student.StudentQualification = dto.StudentQualification;
-            student.StudentUsername = dto.StudentUsername;
+            student.StudentUsername = dto.StudentUsername; // This IS the email
             student.StudentPassword = dto.StudentPassword;
             student.RegistrationStatus = dto.RegistrationStatus;
             student.UpdatedAt = DateTime.UtcNow;
@@ -118,7 +115,5 @@ namespace ComputerSeekho.API.Services
 
             await _repository.DeleteAsync(student);
         }
-
-
     }
 }

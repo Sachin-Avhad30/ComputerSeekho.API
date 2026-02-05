@@ -53,7 +53,7 @@ namespace ComputerSeekho.API.Entities
 
         // Navigation properties
         [ForeignKey("StudentId")]
-        public virtual StudentMaster? Student { get; set; }
+        public virtual Student? Student { get; set; }
 
         [ForeignKey("BatchId")]
         public virtual Batch? Batch { get; set; }

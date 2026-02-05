@@ -13,8 +13,7 @@ namespace ComputerSeekho.API.DTOs
         [Required]
         public int PaymentTypeId { get; set; }
 
-        [Required]
-        [Range(0.01, 999999.99)]
+        [Range(1000, 999999.99, ErrorMessage = "Minimum payment amount is ₹1000")]
         public decimal PaymentAmount { get; set; }
 
         [MaxLength(100)]
