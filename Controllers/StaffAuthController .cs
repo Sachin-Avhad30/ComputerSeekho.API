@@ -2,6 +2,10 @@
 using ComputerSeekho.API.DTOs.Response;
 using ComputerSeekho.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace ComputerSeekho.API.Controllers
 {
@@ -85,6 +89,29 @@ namespace ComputerSeekho.API.Controllers
         }
 
 
+
+
+
+
+
+
+
+        [HttpGet("google-login")]
+        public IActionResult GoogleLogin()
+        {
+            _logger.LogInformation("Initiating Google OAuth login");
+
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action(nameof(GetOAuth2User)),
+                AllowRefresh = true
+            };
+
+            _logger.LogInformation("Redirect URI: {RedirectUri}", properties.RedirectUri);
+
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
         /// <summary>
         /// OAuth2 Google Authentication Success Handler
         /// GET /api/auth/oauth2/user
@@ -94,29 +121,63 @@ namespace ComputerSeekho.API.Controllers
         {
             try
             {
-                // Get email from authenticated user claims
-                var emailClaim = User.Claims.FirstOrDefault(c => c.Type == "email" || c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
+                _logger.LogInformation("OAuth2 callback received");
+
+                // Authenticate using Cookie scheme
+                var authenticateResult = await HttpContext.AuthenticateAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme);
+
+                if (!authenticateResult.Succeeded)
+                {
+                    _logger.LogWarning("Cookie authentication failed");
+                    return Redirect("http://localhost:5173/admin/login?error=auth_failed");
+                }
+
+                _logger.LogInformation("Cookie authentication succeeded");
+
+                // Log all claims for debugging
+                var claims = authenticateResult.Principal?.Claims.ToList();
+                if (claims != null)
+                {
+                    foreach (var claim in claims)
+                    {
+                        _logger.LogInformation("Claim: {Type} = {Value}", claim.Type, claim.Value);
+                    }
+                }
+
+                // Get email claim
+                var emailClaim = authenticateResult.Principal?.Claims.FirstOrDefault(c =>
+                    c.Type == ClaimTypes.Email ||
+                    c.Type == "email" ||
+                    c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
 
                 if (emailClaim == null)
                 {
-                    return Redirect("http://localhost:5173/admin/login?error=oauth");
+                    _logger.LogWarning("Email claim not found in OAuth response");
+                    return Redirect("http://localhost:5173/admin/login?error=no_email");
                 }
 
                 string email = emailClaim.Value;
+                _logger.LogInformation("Google OAuth successful for email: {Email}", email);
 
                 // Generate JWT using Google email
                 var jwtResponse = await _staffAuthService.AuthenticateStaffWithGoogleAsync(email);
+
+                // Sign out of cookie auth (we only need the JWT now)
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                _logger.LogInformation("JWT generated successfully, redirecting to frontend");
 
                 // Redirect to React with token
                 return Redirect($"http://localhost:5173/oauth-success?token={jwtResponse.Token}");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "OAuth2 authentication failed");
-                return Redirect("http://localhost:5173/admin/login?error=oauth");
+                _logger.LogError(ex, "OAuth2 authentication failed: {Message}", ex.Message);
+                _logger.LogError("Stack trace: {StackTrace}", ex.StackTrace);
+                return Redirect($"http://localhost:5173/admin/login?error=server_error&message={Uri.EscapeDataString(ex.Message)}");
             }
         }
-
         /// <summary>
         /// Test endpoint to check if API is working
         /// GET /api/auth/test
