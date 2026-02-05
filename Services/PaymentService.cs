@@ -55,18 +55,50 @@ namespace ComputerSeekho.API.Services
                 var course = batch?.Course;
                 var paymentType = payment?.PaymentType;
 
+                // ✅ Get ALL payments for this student in this batch
+                var allPayments = await _context.Payments
+                    .Include(p => p.PaymentType)
+                    .Where(p => p.StudentId == payment.StudentId && p.BatchId == payment.BatchId)
+                    .OrderBy(p => p.PaymentDate)
+                    .ToListAsync();
+
+                // Calculate totals
+                decimal totalPaid = allPayments.Sum(p => p.PaymentAmount);
+                decimal totalFees = batch?.CourseFees ?? 0;
+                decimal remainingBalance = totalFees - totalPaid;
+
+                // Map to PreviousPaymentDTO
+                var previousPayments = allPayments.Select(p => new PreviousPaymentDTO
+                {
+                    PaymentId = p.PaymentId,
+                    PaymentAmount = p.PaymentAmount,
+                    PaymentDate = p.PaymentDate,
+                    PaymentTypeDesc = p.PaymentType?.PaymentTypeDesc ?? ""
+                }).ToList();
+
                 return new PaymentPdfDTO
                 {
+                    ReceiptId = receipt.ReceiptId,
                     StudentName = student?.StudentName ?? "",
                     StudentMobile = student?.StudentMobile.ToString() ?? "",
                     StudentAddress = student?.StudentAddress ?? "",
                     StudentEmail = student?.StudentUsername ?? "", // USERNAME IS EMAIL!
                     CourseName = course?.CourseName ?? "",
+                    BatchName = batch?.BatchName ?? "",
                     Amount = payment?.PaymentAmount ?? 0,
                     PaymentDate = payment?.PaymentDate ?? DateTime.Now,
                     PaymentType = paymentType?.PaymentTypeDesc ?? "",
                     ReceiptAmount = receipt.ReceiptAmount,
-                    ReceiptDate = receipt.ReceiptDate
+                    ReceiptDate = receipt.ReceiptDate,
+                    TransactionReference = payment?.TransactionReference,
+
+                    // ✅ Payment Summary
+                    TotalCourseFees = totalFees,
+                    TotalPaidTillNow = totalPaid,
+                    RemainingBalance = remainingBalance,
+
+                    // ✅ All Previous Payments
+                    AllPreviousPayments = previousPayments
                 };
             }
             catch (Exception ex)
@@ -75,7 +107,6 @@ namespace ComputerSeekho.API.Services
                 throw;
             }
         }
-
         public async Task<string> GeneratePdfAndSendEmailAsync(int receiptId)
         {
             try

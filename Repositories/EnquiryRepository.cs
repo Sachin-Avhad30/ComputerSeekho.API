@@ -44,6 +44,7 @@ namespace ComputerSeekho.API.Repositories
                 .Include(e => e.Staff)
                 .Where(e => e.StaffId == staffId
                     && !e.IsClosed
+                    && !e.StudentId.HasValue  // ✅ Exclude converted enquiries
                     && e.FollowupDate.HasValue
                     && e.FollowupDate.Value.Date >= fromDate.Date)
                 .OrderBy(e => e.FollowupDate)
@@ -56,6 +57,7 @@ namespace ComputerSeekho.API.Repositories
                 .Include(e => e.Course)
                 .Include(e => e.Staff)
                 .Where(e => !e.IsClosed
+                    && !e.StudentId.HasValue  // ✅ Exclude converted enquiries
                     && e.FollowupDate.HasValue
                     && e.FollowupDate.Value.Date >= fromDate.Date)
                 .OrderBy(e => e.FollowupDate)

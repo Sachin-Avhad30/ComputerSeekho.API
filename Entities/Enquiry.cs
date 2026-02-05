@@ -84,5 +84,12 @@ namespace ComputerSeekho.API.Entities
 
         [Column("is_closed")]
         public bool IsClosed { get; set; } = false;
+
+        // ✅ NEW FIELD: Track converted student
+        [Column("student_id")]
+        public int? StudentId { get; set; }
+
+        [ForeignKey("StudentId")]
+        public Student? Student { get; set; }
     }
 }
