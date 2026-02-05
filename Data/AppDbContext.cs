@@ -15,6 +15,7 @@ namespace ComputerSeekho.API.Data
         public DbSet<Placement> PlacementMasters { get; set; }
         public DbSet<Student> StudentMasters { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Enquiry> Enquiries { get; set; }
 
         // DbSets
         public DbSet<Staff> Staff { get; set; }
@@ -107,8 +108,52 @@ namespace ComputerSeekho.API.Data
                 entity.HasIndex(e => e.IsActive);
                 entity.HasIndex(e => new { e.ValidFrom, e.ValidTo });
             });
-        }
 
+            modelBuilder.Entity<Enquiry>(entity =>
+            {
+                entity.HasKey(e => e.EnquiryId);
+
+                entity.Property(e => e.EnquirerName)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.EnquirerMobile)
+                    .IsRequired();
+
+                entity.Property(e => e.EnquiryProcessedFlag)
+                    .HasDefaultValue(false);
+
+                entity.Property(e => e.InquiryCounter)
+                    .HasDefaultValue(0);
+
+                entity.Property(e => e.IsClosed)
+                    .HasDefaultValue(false);
+
+                // Configure relationship with Course
+                entity.HasOne(e => e.Course)
+                    .WithMany()
+                    .HasForeignKey(e => e.CourseId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Configure relationship with Staff
+                entity.HasOne(e => e.Staff)
+                    .WithMany()
+                    .HasForeignKey(e => e.StaffId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Configure relationship with ClosureReason
+                entity.HasOne(e => e.ClosureReason)
+                    .WithMany()
+                    .HasForeignKey(e => e.ClosureReasonId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Indexes for better query performance
+                entity.HasIndex(e => e.IsClosed);
+                entity.HasIndex(e => e.FollowupDate);
+                entity.HasIndex(e => new { e.StaffId, e.IsClosed, e.FollowupDate });
+            });
+        }
+    
         public override int SaveChanges()
         {
             UpdateTimestamps();
