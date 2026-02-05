@@ -27,7 +27,7 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IPlacementRepository, PlacementRepository>();
             services.AddScoped<IRecruiterRepository, RecruiterRepository>();
-
+            services.AddScoped<IAlbumRepository, AlbumRepository>();
             services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             // Services
             services.AddScoped<ICourseService, CourseService>();
@@ -38,6 +38,9 @@ namespace ComputerSeekho.API.Extensions
             services.AddScoped<IPlacementService, PlacementService>();
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IAlbumService, AlbumService>();
+           
+
 
             // ========================================
             // STAFF MODULE (Authentication & Management)

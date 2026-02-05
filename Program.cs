@@ -1,10 +1,14 @@
 ﻿using ComputerSeekho.API.Extensions;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ========================================
 // ADD SERVICES TO CONTAINER
 // ========================================
+
+ExcelPackage.License.SetNonCommercialPersonal("ComputerSeekho");
+
 
 // Application Services (Database, Repositories, Services)
 builder.Services.AddApplicationServices(builder.Configuration);

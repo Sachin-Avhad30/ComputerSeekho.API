@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerSeekho.API", "ComputerSeekho.API.csproj", "{ACE54CBE-A5BC-49B8-8173-0A1B6E25FE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerSeekhoTest", "..\ComputerSeekhoTest\ComputerSeekhoTest.csproj", "{D2504F09-2850-4F0B-9A2B-3282D2E21134}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{ACE54CBE-A5BC-49B8-8173-0A1B6E25FE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACE54CBE-A5BC-49B8-8173-0A1B6E25FE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACE54CBE-A5BC-49B8-8173-0A1B6E25FE59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2504F09-2850-4F0B-9A2B-3282D2E21134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2504F09-2850-4F0B-9A2B-3282D2E21134}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2504F09-2850-4F0B-9A2B-3282D2E21134}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2504F09-2850-4F0B-9A2B-3282D2E21134}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
