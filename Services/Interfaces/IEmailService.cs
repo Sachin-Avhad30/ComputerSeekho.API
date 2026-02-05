@@ -5,5 +5,6 @@ namespace ComputerSeekho.API.Services.Interfaces
     public interface IEmailService
     {
         Task SendEnquiryEmailAsync(EmailRequestDTO dto);
+        Task SendReceiptPdfEmailAsync(string userEmail, byte[] pdfBytes);
     }
 }

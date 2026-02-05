@@ -1,7 +1,8 @@
 ﻿using ComputerSeekho.API.DTOs;
 using ComputerSeekho.API.Services.Interfaces;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace ComputerSeekho.API.Services
 {
@@ -62,6 +63,49 @@ namespace ComputerSeekho.API.Services
             catch (Exception ex)
             {
                 throw new Exception($"An error occurred while sending email: {ex.Message}", ex);
+            }
+        }
+
+        public async Task SendReceiptPdfEmailAsync(string userEmail, byte[] pdfBytes)
+        {
+            try
+            {
+                using (var smtpClient = new SmtpClient(_smtpHost, _smtpPort))
+                {
+                    smtpClient.EnableSsl = _enableSsl;
+                    smtpClient.Credentials = new NetworkCredential(_smtpUsername, _smtpPassword);
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(_fromEmail, _fromName),
+                        Subject = "Payment Receipt - Computer Seekho",
+                        Body = "Hello,\n\n" +
+                               "Please find your payment receipt attached as a PDF.\n\n" +
+                               "Thank you for choosing Computer Seekho.\n\n" +
+                               "Regards,\n" +
+                               "Computer Seekho Team",
+                        IsBodyHtml = false
+                    };
+
+                    mailMessage.To.Add(userEmail);
+
+                    // Attach PDF
+                    using (var memoryStream = new MemoryStream(pdfBytes))
+                    {
+                        var attachment = new Attachment(memoryStream, "receipt.pdf", MediaTypeNames.Application.Pdf);
+                        mailMessage.Attachments.Add(attachment);
+
+                        await smtpClient.SendMailAsync(mailMessage);
+                    }
+                }
+            }
+            catch (SmtpException ex)
+            {
+                throw new Exception($"Failed to send receipt email: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while sending receipt email: {ex.Message}", ex);
             }
         }
     }

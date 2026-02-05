@@ -52,6 +52,8 @@ namespace ComputerSeekho.API.Entities
         [MaxLength(255)]
         public string? BatchLogoUrl { get; set; }
 
+        public virtual ICollection<Payment>? Payments { get; set; }
+
         //[Column("created_at")]
         //public DateTime CreatedAt { get; set; }
 

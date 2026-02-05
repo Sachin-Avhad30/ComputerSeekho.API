@@ -4,7 +4,8 @@ using ComputerSeekho.API.Enum;
 using ComputerSeekho.API.Repositories.Interfaces;
 using ComputerSeekho.API.Services.Interfaces;
 using ComputerSeekho.Application.Services.Interfaces;
-
+using ComputerSeekho.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComputerSeekho.API.Services
 {
@@ -12,12 +13,16 @@ namespace ComputerSeekho.API.Services
     {
         private readonly IStudentRepository _repository;
         private readonly IFileStorageService _fileStorage;
+        private readonly AppDbContext _context;
 
-
-        public StudentService(IStudentRepository repository, IFileStorageService fileStorage)
+        public StudentService(
+            IStudentRepository repository,
+            IFileStorageService fileStorage,
+            AppDbContext context)
         {
             _repository = repository;
             _fileStorage = fileStorage;
+            _context = context;
         }
 
         // GET
@@ -51,15 +56,30 @@ namespace ComputerSeekho.API.Services
                 StudentDob = dto.StudentDob,
                 StudentAddress = dto.StudentAddress,
                 StudentQualification = dto.StudentQualification,
-                StudentUsername = dto.StudentUsername,
+                StudentUsername = dto.StudentUsername, // This IS the email
                 StudentPassword = dto.StudentPassword,
-
-                PhotoUrl = photoUrl, // 🔥 SAVE PATH
+                PhotoUrl = photoUrl,
                 RegistrationStatus = dto.RegistrationStatus,
                 CreatedAt = DateTime.UtcNow
             };
 
             await _repository.AddAsync(student);
+
+            // ✅ NEW: Mark enquiry as converted
+            if (dto.EnquiryId.HasValue)
+            {
+                var enquiry = await _context.Set<Enquiry>()
+                    .FirstOrDefaultAsync(e => e.EnquiryId == dto.EnquiryId.Value);
+
+                if (enquiry != null)
+                {
+                    enquiry.StudentId = student.StudentId;
+                    enquiry.IsClosed = true;
+                    enquiry.ClosureReasonText = "Converted to Student";
+                    _context.Set<Enquiry>().Update(enquiry);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
 
         // PUT
@@ -95,7 +115,7 @@ namespace ComputerSeekho.API.Services
             student.StudentDob = dto.StudentDob;
             student.StudentAddress = dto.StudentAddress;
             student.StudentQualification = dto.StudentQualification;
-            student.StudentUsername = dto.StudentUsername;
+            student.StudentUsername = dto.StudentUsername; // This IS the email
             student.StudentPassword = dto.StudentPassword;
             student.RegistrationStatus = dto.RegistrationStatus;
             student.UpdatedAt = DateTime.UtcNow;
@@ -118,7 +138,5 @@ namespace ComputerSeekho.API.Services
 
             await _repository.DeleteAsync(student);
         }
-
-
     }
 }

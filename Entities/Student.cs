@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ComputerSeekho.API.Enum;
+using ComputerSeekho.API.Enums;
 
 namespace ComputerSeekho.API.Entities
 {
@@ -11,7 +11,6 @@ namespace ComputerSeekho.API.Entities
         // =========================
         // PRIMARY KEY
         // =========================
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("student_id")]
@@ -20,7 +19,6 @@ namespace ComputerSeekho.API.Entities
         // =========================
         // FOREIGN KEYS
         // =========================
-
         [Column("batch_id")]
         public int? BatchId { get; set; }
 
@@ -36,7 +34,6 @@ namespace ComputerSeekho.API.Entities
         // =========================
         // STUDENT DETAILS
         // =========================
-
         [Required]
         [MaxLength(100)]
         [Column("student_name")]
@@ -63,12 +60,14 @@ namespace ComputerSeekho.API.Entities
         public string StudentQualification { get; set; }
 
         // =========================
-        // AUTH
+        // AUTH (USERNAME IS EMAIL)
         // =========================
-
+        [Required]
         [MaxLength(100)]
+        [EmailAddress]
         [Column("student_username")]
-        public string StudentUsername { get; set; }
+        public string StudentUsername { get; set; } // This IS the email!
+
 
         [MaxLength(255)]
         [Column("student_password")]
@@ -77,7 +76,6 @@ namespace ComputerSeekho.API.Entities
         // =========================
         // PHOTO
         // =========================
-
         [MaxLength(255)]
         [Column("photo_url")]
         public string PhotoUrl { get; set; }
@@ -85,9 +83,17 @@ namespace ComputerSeekho.API.Entities
         // =========================
         // STATUS
         // =========================
-
         [Column("registration_status")]
         public RegistrationStatus RegistrationStatus { get; set; }
             = RegistrationStatus.PaymentPending;
+
+        // =========================
+        // NAVIGATION PROPERTIES
+        // =========================
+
+        /// <summary>
+        /// Collection of all payments made by this student
+        /// </summary>
+        public virtual ICollection<Payment>? Payments { get; set; }
     }
 }
