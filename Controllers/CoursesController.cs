@@ -98,5 +98,15 @@ namespace ComputerSeekho.API.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
+        [HttpGet("name/{id}")]
+        public async Task<IActionResult> GetCourseNameById(int id)
+        {
+            var courseName = await _courseService.GetCourseNameByIdAsync(id);
+
+            if (courseName == null)
+                return NotFound("Course not found");
+
+            return Ok(new { courseName });
+        }
     }
 }

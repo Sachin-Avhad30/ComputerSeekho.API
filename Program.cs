@@ -148,7 +148,7 @@ if (!app.Environment.IsDevelopment())
 // Cookie policy must come before authentication
 app.UseCookiePolicy();
 
-//app.UseMiddleware<GlobalException>();
+app.UseMiddleware<GlobalException>();
 
 
 app.UseCors("AllowFrontend");

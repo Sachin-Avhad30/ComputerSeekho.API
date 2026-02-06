@@ -138,5 +138,11 @@ namespace ComputerSeekho.API.Services
                 UpdatedAt = course.UpdatedAt
             };
         }
+
+        public async Task<string?> GetCourseNameByIdAsync(int courseId)
+        {
+            return await _courseRepository.GetCourseNameByIdAsync(courseId);
+        }
+
     }
 }

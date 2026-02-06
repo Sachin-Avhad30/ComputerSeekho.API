@@ -13,5 +13,7 @@ namespace ComputerSeekho.API.Repositories.Interfaces
         Task<Batch> UpdateAsync(Batch batch);
         Task<bool> DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
+        Task<string?> GetBatchNameByIdAsync(int batchId);
+
     }
 }

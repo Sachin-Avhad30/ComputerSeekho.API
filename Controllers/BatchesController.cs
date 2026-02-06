@@ -210,5 +210,16 @@ namespace ComputerSeekho.API.Controllers
                 return StatusCode(500, new { message = "An error occurred while deleting the batch" });
             }
         }
+
+        [HttpGet("name/{batchid}")]
+        public async Task<IActionResult> GetBatchNameById(int batchid)
+        {
+            var batchName = await _batchService.GetBatchNameByIdAsync(batchid);
+
+            if (batchName == null)
+                return NotFound("Batch not found");
+
+            return Ok(batchName);
+        }
     }
 }

@@ -46,5 +46,7 @@ namespace ComputerSeekho.API.Controllers
             await _service.DeleteAsync(id);
             return Ok("Student deleted successfully");
         }
+
+       
     }
 }

@@ -65,5 +65,13 @@ namespace ComputerSeekho.API.Repositories
         {
             return await _context.Courses.AnyAsync(c => c.CourseId == id);
         }
+        public async Task<string?> GetCourseNameByIdAsync(int courseId)
+        {
+            return await _context.Courses
+                .Where(c => c.CourseId == courseId)
+                .Select(c => c.CourseName)
+                .FirstOrDefaultAsync();
+        }
+
     }
 }

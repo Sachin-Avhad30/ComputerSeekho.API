@@ -17,5 +17,8 @@ namespace ComputerSeekho.Application.Services.Interfaces
         Task<CourseResponseDTO> GetCourseByIdAsync(int courseId);
         Task<Course> GetCourseEntityByIdAsync(int courseId);
         Task<bool> DeleteCourseAsync(int courseId);
+
+        Task<string?> GetCourseNameByIdAsync(int courseId);
+
     }
 }

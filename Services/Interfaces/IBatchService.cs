@@ -14,5 +14,8 @@ namespace ComputerSeekho.API.Services.Interfaces
         Task<BatchResponseDTO> GetBatchByIdAsync(int batchId);
         Task<Batch> GetBatchEntityByIdAsync(int batchId);
         Task<bool> DeleteBatchAsync(int batchId);
+
+        Task<string?> GetBatchNameByIdAsync(int batchId);
+
     }
 }

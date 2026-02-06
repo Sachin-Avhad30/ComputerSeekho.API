@@ -90,5 +90,14 @@ namespace ComputerSeekho.API.Repositories
         {
             return await _context.Batches.AnyAsync(b => b.BatchId == id);
         }
+
+        public async Task<string?> GetBatchNameByIdAsync(int batchId)
+        {
+            return await _context.Batches
+                .Where(b => b.BatchId == batchId)
+                .Select(b => b.BatchName)
+                .FirstOrDefaultAsync();
+        }
+
     }
 }
