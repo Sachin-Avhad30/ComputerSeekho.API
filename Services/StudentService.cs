@@ -26,9 +26,15 @@ namespace ComputerSeekho.API.Services
         }
 
         // GET
+        //public async Task<List<Student>> GetAllAsync()
+        //{
+        //    return await _repository.GetAllAsync();
+        //}
         public async Task<List<Student>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _context.StudentMasters
+                .OrderByDescending(s => s.CreatedAt)   // 🔥 newest first
+                .ToListAsync();
         }
 
         // POST

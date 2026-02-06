@@ -89,9 +89,9 @@ namespace ComputerSeekho.Application.Services
 
             // Validate staff role
             var role = staffRole.ToLower();
-            if (role != "admin" && role != "teaching")
+            if (role != "non-teaching" && role != "teaching")
             {
-                return new MessageResponse("Error: Invalid staff role! Use 'admin' or 'teaching'");
+                return new MessageResponse("Error: Invalid staff role! Use 'non-teaching' or 'teaching'");
             }
 
             // Handle image upload

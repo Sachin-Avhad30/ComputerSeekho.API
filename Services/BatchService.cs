@@ -4,6 +4,7 @@ using ComputerSeekho.API.Enum;
 using ComputerSeekho.API.Repositories.Interfaces;
 using ComputerSeekho.API.Services.Interfaces;
 using ComputerSeekho.Application.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComputerSeekho.API.Services
 {
@@ -267,5 +268,11 @@ namespace ComputerSeekho.API.Services
                 UpdatedAt = batch.UpdatedAt
             };
         }
+
+        public async Task<string?> GetBatchNameByIdAsync(int batchId)
+        {
+            return await _batchRepository.GetBatchNameByIdAsync(batchId);
+        }
+
     }
 }
